@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interpolations>
+<interpolation code="RR3" unitIn="kohm" unitOut="deg C" function="S863"/>
+<interpolation code="RR3" unitIn="KOhms" unitOut="deg C" function="S863"/>
+</interpolations>

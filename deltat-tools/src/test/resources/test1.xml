@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<data>
+<records time="28.04.2009 00:00:00">
+<record number="0" label="counter" unit="count" faultcode="OK">0.0</record>
+<record number="1" label="t01" unit="GradC" faultcode="OK">12.95</record>
+<record number="2" label="t02" unit="GradC" faultcode="OVERRANGE">-24.03</record>
+<record number="3" label="t03" unit="GradC" faultcode="OK">13.05</record>
+<record number="4" label="t04" unit="GradC" faultcode="OK">13.31</record>
+<record number="5" label="t05" unit="GradC" faultcode="OK">12.75</record>
+<record number="6" label="t06" unit="GradC" faultcode="OVERRANGE">-24.03</record>
+<record number="7" label="t07" unit="GradC" faultcode="OVERRANGE">-24.03</record>
+<record number="8" label="t08" unit="GradC" faultcode="OK">10.67</record>
+<record number="9" label="t09" unit="GradC" faultcode="OK">11.87</record>
+<record number="11" label="t10" unit="GradC" faultcode="OVERRANGE">-24.03</record>
+</records>
+<records time="28.04.2009 01:00:00">
+<record number="0" label="counter" unit="count" faultcode="OK">0.0</record>
+<record number="1" label="t01" unit="GradC" faultcode="OK">10.89</record>
+<record number="2" label="t02" unit="GradC" faultcode="OVERRANGE">-23.19</record>
+<record number="3" label="t03" unit="GradC" faultcode="OK">12.8</record>
+<record number="4" label="t04" unit="GradC" faultcode="OK">13.14</record>
+<record number="5" label="t05" unit="GradC" faultcode="OK">12.69</record>
+<record number="6" label="t06" unit="GradC" faultcode="OVERRANGE">-24.03</record>
+<record number="7" label="t07" unit="GradC" faultcode="OVERRANGE">-24.03</record>
+<record number="8" label="t08" unit="GradC" faultcode="OK">9.87</record>
+<record number="9" label="t09" unit="GradC" faultcode="OK">11.0</record>
+<record number="11" label="t10" unit="GradC" faultcode="OVERRANGE">-24.03</record>
+</records>
+<records time="28.04.2009 02:00:00">
+<record number="0" label="counter" unit="count" faultcode="OK">0.0</record>
+<record number="1" label="t01" unit="GradC" faultcode="OK">12.19</record>
+<record number="2" label="t02" unit="GradC" faultcode="OK">-22.73</record>
+<record number="3" label="t03" unit="GradC" faultcode="OK">12.61</record>
+<record number="4" label="t04" unit="GradC" faultcode="OK">12.99</record>
+<record number="5" label="t05" unit="GradC" faultcode="OK">12.64</record>
+<record number="6" label="t06" unit="GradC" faultcode="OVERRANGE">-24.03</record>
+<record number="7" label="t07" unit="GradC" faultcode="OVERRANGE">-24.03</record>
+<record number="8" label="t08" unit="GradC" faultcode="OK">10.55</record>
+<record number="9" label="t09" unit="GradC" faultcode="OK">11.46</record>
+<record number="11" label="t10" unit="GradC" faultcode="OVERRANGE">-24.03</record>
+</records>
+<records time="28.04.2009 03:00:00">
+<record number="0" label="counter" unit="count" faultcode="OK">0.0</record>
+<record number="1" label="t01" unit="GradC" faultcode="OK">13.99</record>
+<record number="2" label="t02" unit="GradC" faultcode="OK">-23.28</record>
+<record number="3" label="t03" unit="GradC" faultcode="OK">12.52</record>
+<record number="4" label="t04" unit="GradC" faultcode="OK">12.85</record>
+<record number="5" label="t05" unit="GradC" faultcode="OK">12.57</record>
+<record number="6" label="t06" unit="GradC" faultcode="OVERRANGE">-24.03</record>
+<record number="7" label="t07" unit="GradC" faultcode="OVERRANGE">-24.03</record>
+<record number="8" label="t08" unit="GradC" faultcode="OK">11.73</record>
+<record number="9" label="t09" unit="GradC" faultcode="OK">12.87</record>
+<record number="11" label="t10" unit="GradC" faultcode="OVERRANGE">-24.03</record>
+</records>
+</data>

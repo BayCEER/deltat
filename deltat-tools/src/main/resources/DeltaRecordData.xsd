@@ -1,0 +1,46 @@
+<xsd:schema
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://www.bayceer.uni-bayreuth.de/delta-t-records"
+    xmlns="http://www.bayceer.uni-bayreuth.de/delta-t-records"
+    elementFormDefault="qualified">     
+<xsd:element name="data">
+  <xsd:complexType>
+    <xsd:sequence>
+      <xsd:element name="records" type="records" maxOccurs="unbounded"/>      
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:element>
+
+
+
+
+ <xsd:complexType name="records">
+   <xsd:sequence>
+    <xsd:element name="record" maxOccurs="unbounded" >
+        <xsd:complexType>
+         <xsd:attribute name="number" type="xsd:nonNegativeInteger" use="required"/>
+         <xsd:attribute name="label" type="xsd:string" use="required"/>
+         <xsd:attribute name="unit" type="xsd:string"/>
+         <xsd:attribute name="faultcode" type="faultcodeType" use="required"/>
+        </xsd:complexType>
+    </xsd:element>
+   </xsd:sequence>    
+   <xsd:attribute name="time" type="xsd:string" /> 
+ </xsd:complexType>
+ 
+ 
+ 
+ <xsd:simpleType name="faultcodeType">
+  <xsd:restriction base="xsd:string">
+    <xsd:enumeration value="OK"/>
+    <xsd:enumeration value="OVERRANGE"/>
+    <xsd:enumeration value="NOISY"/>
+    <xsd:enumeration value="OVERRUN"/>
+    <xsd:enumeration value="OUTSIDELIMITS"/> 
+  </xsd:restriction>
+  </xsd:simpleType> 
+  
+  
+ 
+
+</xsd:schema>

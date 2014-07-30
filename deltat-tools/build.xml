@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<project basedir="." default="compile" name="Delta-t">
+	
+	<property name="version" value="1.2"/>
+	<property name="short-version" value="12"/>
+	<property name="project" value="delta-t"/>
+	<property name="final.name" value="${project}-${version}"/>
+	
+	<property name="Serial.location" value="../Serial"/>
+	<property name="Function.location" value="../Function"/>
+   	<property name="vm_version" value="1.6"/>
+	    
+	<property name="build.dir" value="./build"/>
+	<property name="src.dir" value="./src"/>
+	<property name="lib.dir" value="./lib"/>
+	<property name="dist.dir" value="./dist"/>	
+	<property name="log4j.jar" value="log4j-1.2.9.jar"/>
+	<property name="opencsv.jar" value="opencsv-2.2.jar"/>
+	
+    <path id="classpath">    
+        <pathelement location="${Serial.location}/serial-1.1.jar"/>
+    	<pathelement location="${Function.location}/function-1.1.jar"/>
+        <pathelement location="${Function.location}/lib/commons-math.jar"/>
+     	<pathelement location="${Function.location}/lib/commons-primitives.jar"/>
+    	<pathelement location="${lib.dir}/${log4j.jar}"/>
+    	<pathelement location="${lib.dir}/${opencsv.jar}"/>
+    </path>
+	
+	
+	<target name="init" depends="clean">
+	    <mkdir dir="${build.dir}"/>
+	    <mkdir dir="${dist.dir}"/>	     
+   </target>  
+
+	<target name="compile" depends="init">
+	    <javac 
+	      srcdir="${src.dir}" destdir="${build.dir}" target="${vm_version}" source="${vm_version}">
+	      <classpath refid="classpath"/>
+	      <include name="**/*.java"/>
+	      <exclude name="**/tests**"/>
+	    </javac>
+	 </target>
+	  
+	 <target name="jar" depends="compile">
+	     <jar jarfile="${dist.dir}/${final.name}.jar" manifest="MANIFEST.MF">
+	      <fileset dir="${build.dir}"/>
+	    </jar>	    
+      </target>
+
+	  <target name="clean">
+	    <delete dir="${build.dir}"/>
+	  	<delete dir="${dist.dir}"/>
+	  </target>
+	
+	  <target name="deploy" depends="jar">
+	      	<mkdir dir="${lib.dir}/functions"/>
+	  		<copy file="functions/S863.xml" todir="${dist.dir}/functions"/>	  		
+	  		<copy includeemptydirs="false" todir="${dist.dir}">	  		
+	  		 <fileset dir="${lib.dir}" includes="*.jar"/>
+	  		 <fileset file="interpolations.xml"/>
+	  		 <fileset file="log4j.properties"/>
+	  	   	 <fileset file="${Serial.location}/serial-1.1.jar"/>
+	  		 <fileset file="${Function.location}/function-1.1.jar"/>
+	  	     <fileset file="${Function.location}/lib/commons-math.jar"/>
+	  	     <fileset file="${Function.location}/lib/commons-primitives.jar"/>
+	  		 <fileset file="./scripts/*" includes="*.cmd"/>	  	
+	  		</copy>
+	  	
+	  	
+	  </target>
+	
+	
+    
+</project>
