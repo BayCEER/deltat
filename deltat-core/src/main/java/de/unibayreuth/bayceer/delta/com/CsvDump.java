@@ -32,6 +32,12 @@ public class CsvDump extends Thread {
 
 	private Boolean full;
 
+	private String config;
+
+	public CsvDump(String config) {
+		this.config = config;
+	}
+
 	/**
 	 * @param args
 	 */
@@ -39,7 +45,7 @@ public class CsvDump extends Thread {
 		PropertyConfigurator.configure("log4j.properties");
 		System.setProperty("user.timezone", "GMT+1");
 		TimeZone.setDefault(TimeZone.getTimeZone("GMT+1"));
-		new CsvDump().start();
+		new CsvDump(args[0]).start();
 	}
 
 	@Override
@@ -52,7 +58,7 @@ public class CsvDump extends Thread {
 			log.info("CsvDump dump running.");
 			try {
 				Properties p = new Properties();
-				p.load(new FileReader("CsvDump.properties"));
+				p.load(new FileReader(config));
 				device = p.getProperty("device", "COM1");
 				baudrate = Integer.valueOf(p.getProperty("baudrate", "9600"));
 				interval = Integer.valueOf(p.getProperty("interval", "60")) * 1000 * 60;
