@@ -14,6 +14,7 @@ import org.apache.log4j.PropertyConfigurator;
 
 import de.unibayreuth.bayceer.delta.file.BinFile;
 import de.unibayreuth.bayceer.delta.file.BinReader;
+import de.unibayreuth.bayceer.delta.file.Channel;
 import de.unibayreuth.bayceer.delta.file.DLDump;
 
 public class CsvDump extends Thread {
@@ -98,6 +99,7 @@ public class CsvDump extends Thread {
 		Calendar d = new GregorianCalendar();
 		int year = d.get(Calendar.YEAR);
 		bin.readHeader();
+		Channel channels[] = bin.getChannels();
 		if (bin.getFirstTimedData().getLong(1970) > bin.getCurrentTime().getLong(1970)) {
 			year--;
 			log.warn("Identified year span.");
@@ -113,15 +115,19 @@ public class CsvDump extends Thread {
 			System.out.print(dateFormat.format(logt));
 			Vector dr = bin.readBlock(rcount);
 			for (int i = 0; i < dr.size(); i++) {
-				Vector element = (Vector) dr.elementAt(i);
-				System.out.print(";");
-				System.out.print(bin.getChannels()[i].getChannelNumber()+1);
-				System.out.print(":");
-				System.out.print(element.get(1));
-				if (status) {
+				
+				if (channels[i].isDBLabel()){
+					Vector element = (Vector) dr.elementAt(i);
 					System.out.print(";");
-					System.out.print(element.get(0));
+					System.out.print(Integer.valueOf(channels[i].getLabel().substring(1)));
+					System.out.print(":");
+					System.out.print(element.get(1));
+					if (status) {
+						System.out.print(";");
+						System.out.print(element.get(0));
+					}	
 				}
+				
 			}
 			System.out.print("\n");
 			t++;
