@@ -2,12 +2,10 @@ package de.unibayreuth.bayceer.delta.com;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.Properties;
 import java.util.TimeZone;
 import java.util.Vector;
 
@@ -22,20 +20,17 @@ public class CsvDump extends Thread {
 
 	private final static Logger log = Logger.getRootLogger();
 
-	private SimpleDateFormat dateFormat = null;
+	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
 
-	private String device;
-
+	private String dev;
 	private Integer baudrate;
+	private int sleepMin;
 
-	private int interval;
 
-	private Boolean full;
-
-	private String config;
-
-	public CsvDump(String config) {
-		this.config = config;
+	public CsvDump(String dev, Integer baudrate, Integer sleepMin) {
+		this.dev = dev;
+		this.baudrate = baudrate;
+		this.sleepMin = sleepMin;
 	}
 
 	/**
@@ -45,7 +40,7 @@ public class CsvDump extends Thread {
 		PropertyConfigurator.configure("log4j.properties");
 		System.setProperty("user.timezone", "GMT+1");
 		TimeZone.setDefault(TimeZone.getTimeZone("GMT+1"));
-		new CsvDump(args[0]).start();
+		new CsvDump(args[0],Integer.valueOf(args[1]),Integer.valueOf(args[2])).start();
 	}
 
 	@Override
@@ -57,17 +52,9 @@ public class CsvDump extends Thread {
 		while (true) {
 			log.info("CsvDump dump running.");
 			try {
-				Properties p = new Properties();
-				p.load(new FileReader(config));
-				device = p.getProperty("device", "COM1");
-				baudrate = Integer.valueOf(p.getProperty("baudrate", "9600"));
-				interval = Integer.valueOf(p.getProperty("interval", "60")) * 1000 * 60;
-				full = Boolean.valueOf(p.getProperty("full", "false"));
-				dateFormat = new SimpleDateFormat(p.getProperty("dateFormat","yyyy-MM-dd'T'HH:mm:ss"));
-				f = File.createTempFile("delta", ".dmp");				
-				
-				DLDump d = new DLDump(f.getAbsolutePath(), false, baudrate,	device);
-				
+
+				f = File.createTempFile("delta", ".dmp");								
+				DLDump d = new DLDump(f.getAbsolutePath(), false, baudrate,	dev);				
 				if (!d.run()){
 					log.warn("Failed to dump into file: " + f.getAbsolutePath());					
 				} else if (f.length() == 0) {
@@ -78,7 +65,7 @@ public class CsvDump extends Thread {
 					try {
 						fin = new FileInputStream(f);
 						BinFile bin = new BinFile(new BinReader(fin));
-						write(bin, Boolean.valueOf(p.getProperty("status", "false")));
+						write(bin,false);
 					} catch (IOException e) {
 						log.error(e.getMessage());
 					} finally {
@@ -98,7 +85,7 @@ public class CsvDump extends Thread {
 			log.info("CsvDump dump finished.");
 
 			try {
-				Thread.sleep(interval);
+				Thread.sleep(sleepMin*60*1000);
 			} catch (InterruptedException e) {
 				log.error(e.getMessage());
 			}
@@ -106,14 +93,12 @@ public class CsvDump extends Thread {
 
 	}
 
-	private void write(BinFile bin, boolean status) throws IOException {
-
+	public void write(BinFile bin, boolean status) throws IOException {
 		// Identify year span
 		Calendar d = new GregorianCalendar();
 		int year = d.get(Calendar.YEAR);
 		bin.readHeader();
-		if (bin.getFirstTimedData().getLong(1970) > bin.getCurrentTime()
-				.getLong(1970)) {
+		if (bin.getFirstTimedData().getLong(1970) > bin.getCurrentTime().getLong(1970)) {
 			year--;
 			log.warn("Identified year span.");
 		}
@@ -130,6 +115,8 @@ public class CsvDump extends Thread {
 			for (int i = 0; i < dr.size(); i++) {
 				Vector element = (Vector) dr.elementAt(i);
 				System.out.print(";");
+				System.out.print(bin.getChannels()[i].getChannelNumber()+1);
+				System.out.print(":");
 				System.out.print(element.get(1));
 				if (status) {
 					System.out.print(";");
